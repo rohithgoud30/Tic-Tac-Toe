@@ -38,10 +38,14 @@ def win_check(board,marker):
 def space_check(board,position):
   return board[position] == " "
 
-def position_choice(board):
+def position_choice(board,turn):
   position = 0
   while position not in range(1,10) or not space_check(board,position):
-    position = int(input("Enter the postion (1-9) : "))
+    print()
+    position = int(input(turn + " Enter the postion (1-9) : "))
+    if position not in range(1,10) or not space_check(board,position):
+      print()
+      print("Wrong Position its already filled. Try Again !!")
   return position
 
 def full_board_check(board):
@@ -53,15 +57,20 @@ def full_board_check(board):
 def replay():
   choice = " "
   while choice not in ["Y","N"]:
+    print()
     choice = input("Do you want to continue Y or N : ").upper()
   return choice == "Y"
 
 while True:
+  print()
   print("Welcome to Tic Tac Toe")
   the_board = [" "]*10
+  print()
   player1_marker, player2_marker = player_input()
+  print()
   turn = choose_first()
   print(turn + " will Play First ")
+  print()
   play_game = input("Ready to Play Y or N : ").upper()
   if play_game == "Y" :
     game_on = True
@@ -70,26 +79,30 @@ while True:
   while game_on:
     if turn == "Player 1":
       display_board(the_board)
-      position = position_choice(the_board)
+      position = position_choice(the_board,turn)
       player_marker(the_board,player1_marker,position)
       if win_check(the_board,player1_marker):
+        print()
         print("Player 1 Won the Game!!")
         game_on = False
       else:
         if full_board_check(the_board):
+          print()
           print("Game is Draw!!")
           break
         else:
           turn = "Player 2"
     else:
       display_board(the_board)
-      position = position_choice(the_board)
+      position = position_choice(the_board,turn)
       player_marker(the_board,player2_marker,position)
       if win_check(the_board,player2_marker):
+        print()
         print("Player 2 Won the Game!!")
         game_on = False
       else:
         if full_board_check(the_board):
+          print()
           print("Game is Draw!!")
           break
         else:
